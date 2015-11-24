@@ -206,8 +206,6 @@ Try 'scancode --help' for help on options and arguments.'''
 
 formats = ['json', 'html', 'html-app']
 
-license_columns = ['key', 'short_name', 'category', 'owner', 'dejacode_url', 'homepage_url', 'text_url', 'spdx_license_key', 'spdx_url']
-
 
 @click.command(name='scancode', epilog=epilog_text, cls=ScanCommand)
 @click.pass_context
@@ -222,8 +220,6 @@ license_columns = ['key', 'short_name', 'category', 'owner', 'dejacode_url', 'ho
 
 @click.option('-f', '--format', is_flag=False, default='json', show_default=True, metavar='<style>', type=click.Choice(formats),
               help='Set <output_file> format <style> to one of: %s' % ' or '.join(formats),)
-@click.option('--lcolumns', is_flag=False, default=license_columns, show_default=True, metavar='<columns>', type=click.Choice(license_columns),
-              help='Set the columns within the license table', multiple=True)
 @click.option('--verbose', is_flag=True, default=False, help='Print verbose file-by-file progress messages.')
 @click.option('--quiet', is_flag=True, default=False, help='Do not print any progress message.')
 
@@ -233,14 +229,11 @@ license_columns = ['key', 'short_name', 'category', 'owner', 'dejacode_url', 'ho
 @click.option('--version', is_flag=True, is_eager=True, callback=print_version, help='Show the version and exit.')
 
 def scancode(ctx, input, output_file, copyright, license, package,  # @ReservedAssignment
-             info, format, lcolumns, verbose, quiet, *args, **kwargs):  # @ReservedAssignment
+             info, format, verbose, quiet, *args, **kwargs):  # @ReservedAssignment
     """scan the <input> file or directory for origin and license and save results to the <output_file>.
 
     The scan results are printed on terminal if <output_file> is not provided.
     """
-
-    click.echo('Hello %s!' % lcolumns)
-
     possible_scans = [copyright, license, package, info]
     # Default scan when no options is provided
     if not any(possible_scans):
