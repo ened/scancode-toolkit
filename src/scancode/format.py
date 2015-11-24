@@ -130,6 +130,8 @@ def as_template(scan_data, template='html'):
     The template defaults to the standard HTML template format or can point to
     the path of a custom template file.
     """
+    from licensedcode.models import get_license
+
     if template == 'html':
         template = get_template(get_template_dir('html'))
     else:
