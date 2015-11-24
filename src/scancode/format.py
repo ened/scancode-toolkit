@@ -160,6 +160,7 @@ def as_html(detected_data):
 
                 if entry['key'] not in licenses:
                     licenses[entry['key']] = entry
+                    entry['object'] = get_license(entry['key'])
         if results:
             converted[location] = sorted(results, key=itemgetter('start'))
 
