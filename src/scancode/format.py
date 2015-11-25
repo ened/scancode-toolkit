@@ -189,4 +189,4 @@ def as_template(scan_data, template='html'):
         'packages': converted_packages
     }
 
-    return template.render(results=results, licenses=licenses)
+    return template.render(results=results, licenses=licenses).encode('utf-8')
