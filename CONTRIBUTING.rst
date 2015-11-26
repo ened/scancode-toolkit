@@ -15,6 +15,9 @@ name and email::
 
     Signed-off-by: Jane Doe <developer@example.com>
 
+Git can automate this for you::
+
+    git commit --signoff
 
 Feature requests and feedback
 =============================
@@ -102,7 +105,7 @@ To set up ScanCode for local development:
 7. Commit your changes and push your branch to your GitHub fork::
 
     git add .
-    git commit -m "Your detailed description of your changes."
+    git commit --signoff -m "Your detailed description of your changes."
     git push origin name-of-your-bugfix-or-feature
 
 8. Submit a pull request through the GitHub website for this branch.
