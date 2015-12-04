@@ -26,12 +26,14 @@ from __future__ import print_function, absolute_import
 
 from collections import OrderedDict
 from operator import itemgetter
+from os.path import abspath
 from os.path import dirname
 from os.path import exists
+from os.path import expanduser
+from os.path import isfile
 from os.path import join
 
 from commoncode import fileutils
-import os
 
 
 """
@@ -136,8 +138,8 @@ def as_template(scan_data, template='html'):
         template = get_template(get_template_dir('html'))
     else:
         # load a custom template
-        tpath = fileutils.as_posixpath(os.path.abspath(os.path.expanduser(template)))
-        assert os.path.isfile(tpath)
+        tpath = fileutils.as_posixpath(abspath(expanduser(template)))
+        assert isfile(tpath)
         tdir = fileutils.parent_directory(tpath)
         tfile = fileutils.file_name(tpath)
         template = get_template(tdir, tfile)
@@ -167,11 +169,10 @@ def as_template(scan_data, template='html'):
             for entry in scan_result['licenses']:
                 license = get_license(entry['key'])
                 if license.main_license:
-                    extra_licenses.append({
-                        'start_line': entry['start_line'],
-                        'end_line': entry['end_line'],
-                        'key': license.main_license,
-                    })
+                    d = get_license(license.main_license).asdict()
+                    d['start_line'] = entry['start_line']
+                    d['end_line'] = entry['end_line']
+                    extra_licenses.append(d)
 
             # second pass, generate the list of licenses
             for entry in scan_result['licenses'] + extra_licenses:
